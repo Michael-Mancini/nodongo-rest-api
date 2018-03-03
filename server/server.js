@@ -20,7 +20,19 @@ app.post('/todos', (req, res) => {
     });
 });
 
+app.get('/todos', (req, res) => {
+    Todo.find().then((todos) => {
+        res.send({todos});
+        // send an object instead of an array for flexibility and the option
+        // to add a custom status code or another property
+    }, (error) => {
+        res.status(400).send(error);
+    });
+});
+
 var port = 3000;
 app.listen(3000, () => {
     console.log(`Server started on port: ${port}`);
 });
+
+module.exports = {app};
